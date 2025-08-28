@@ -1,4 +1,4 @@
-Preconditions for Playwright to run
+PW Preconditions for Playwright to run
 
 Node.js installed
 
