@@ -1,0 +1,119 @@
+//Insall playwright and the Playwright test runner
+npm install - D @playwright/test
+//to Install all supported browsers
+npx playwright install
+
+1. Default Command //Run all tests:   npx playwright test
+2. Run a Specific Test File//npx playwright test tests/myTest.spec.js
+3. Run Tests with a Specific Name or Title //npx playwright test -g "Login functionality" -g is for grep (search by test name).
+4. Run Tests in a Specific Browser //Playwright supports chromium, firefox, and webkit.
+// npx playwright test --project=chromium
+// npx playwright test --project=firefox
+// npx playwright test --project=webkit
+// Set up in playwright.config.js:
+
+// projects: [
+//   { name: 'chromium', use: { browserName: 'chromium' } },
+//   { name: 'firefox', use: { browserName: 'firefox' } },
+//   { name: 'webkit', use: { browserName: 'webkit' } }
+// ]
+
+5.Run Tests in Headed Mode(with browser UI) //npx playwright test --headed
+6 Run in Debug Mode //npx playwright test --debug   Opens Playwright Inspector for step-by-step debugging.
+7.Run Tests from a Specific Folder  //npx playwright test tests/login/
+8.Run with Tags or Annotations// Use .only or .skip:
+/*
+
+9. 📜 Use Playwright Config for Custom Settings
+
+Set base URL, timeout, retries, browsers, and more in playwright.config.js:
+
+use: {
+  baseURL: 'https://example.com',
+  headless: false,
+  viewport: { width: 1280, height: 720 }
+}
+
+
+Then just run:
+
+npx playwright test */
+
+10.Run Tests in Parallel or Serial
+
+// Parallel (default): npx playwright test
+// Serial (in one worker): npx playwright test --workers=1
+
+11. 📊 Generate HTML Report//npx playwright test --reporter=html
+//To view: npx playwright show-report
+// Using Playwright Test Generator   Record a test:   npx playwright codegen https://example.com
+12. npm install eslint --save-dev// to install eslint
+// ESLint is a static code analysis tool for:
+// Finding potential bugs
+// Enforcing coding standards
+// Improving code consistency
+//npx eslint --init //Run this command initialize ESLint:
+//npm i eslint-plugin-playwright
+13.npm i @typescript-eslint/eslint-plugin @typescript-eslint/parser --save-dev//required for typescript
+
+/*Hook	             Runs...
+beforeAll	           Once before all tests in a file
+afterAll	           Once after all tests in a file
+beforeEach	         Before each individual test
+afterEach	           After each individual test
+🔧 Example: Using Hooks in Playwright
+import { test, expect } from '@playwright/test';
+
+test.beforeAll(async () => {
+  console.log('✅ Before all tests');
+});
+
+test.afterAll(async () => {
+  console.log('✅ After all tests');
+});
+
+test.beforeEach(async ({ page }) => {
+  console.log('🔄 Before each test');
+  await page.goto('https://example.com');
+});
+
+test.afterEach(async () => {
+  console.log('🔁 After each test');
+});
+
+test('Test 1', async ({ page }) => {
+  await expect(page).toHaveTitle(/Example Domain/);
+});
+
+test('Test 2', async ({ page }) => {
+  await expect(page.locator('h1')).toHaveText('Example Domain');
+});
+backtick //backticks allow you to inject variables like ${username} into the strin
+const username = 'John';
+await page.fill(`#user-input-${username}`, 'Hello'); 
+
+= (exact match),
+*= (contains),
+^= (starts with),
+$= (ends with) 
+ChatGPT said:
+
+In Playwright, the “signed-in state” usually refers to a saved 
+authentication state (cookies, local storage, session storage, etc.) that represents a user who is already logged into the application.
+Signed-in state = authentication state
+Stored in a .json file via storageState()
+Reused with test.use({ storageState: 'auth.json' })
+Saves time by avoiding repeated login steps
+
+await page.context().storageState({ path: 'auth.json' });
+What it means
+page.context() → gets the browser context (like an isolated browser profile for your test).
+.storageState() → retrieves the current authentication/session state from that context.
+
+This includes:Cookies (session cookies, auth cookies)
+Local Storage (tokens, app-specific saved values)
+Session Storage{ path: 'auth.json' } → tells Playwright to save that state into a JSON file called auth.json.
+
+So basically:
+👉 It exports your signed-in session into a file, so you can reuse it later without logging in again.
+*/
